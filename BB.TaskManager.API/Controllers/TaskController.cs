@@ -1,8 +1,6 @@
 ﻿using BB.TaskManager.API.Extensions;
-using BB.TaskManager.Application.Interfaces;
 using BB.TaskManager.Application.MediatR.Commands;
 using BB.TaskManager.Application.ViewModels;
-using BB.TaskManager.Application.ViewModels.DataTransferObjects;
 using BB.TaskManager.Application.ViewModels.TaskViewModels.TaskViewModels;
 using BB.TaskManager.Contracts.Models;
 using MediatR;
@@ -23,7 +21,7 @@ public class TaskController : ControllerBase
     }
     
     [HttpPost("create-list")]
-    public async Task<IActionResult> CreateTaskListAsync([FromBody] CreateTaskDto model)
+    public async Task<IActionResult> CreateTaskListAsync([FromBody] CreateTaskListVm model)
     {
         var command = new CreateTaskListCommand
         {
@@ -124,7 +122,6 @@ public class TaskController : ControllerBase
                 TaskId = model.Id,
                 Title = model.Title,
                 Description = model.Description,
-                Status = model.Status
             }
         };
         var result = await _mediator.Send(command);
@@ -158,6 +155,24 @@ public class TaskController : ControllerBase
                 TaskListDestinationId = model.TaskListDestinationId,
                 UserId = User.GetUserId(),
                 TaskId = model.TaskId
+            }
+        };
+        
+        var result = await _mediator.Send(command);
+        
+        return Ok(result);
+    }
+    
+    [HttpPut("change-status")]
+    public async Task<IActionResult> MoveTaskAsync(ChangeTaskStatusVm model)
+    {
+        var command = new ChangeTaskHistoryCommand()
+        {
+            Model = new ChangeTaskStatusModel()
+            {
+                UserId = User.GetUserId(),
+                TaskId = model.TaskId,
+                Status = model.Status
             }
         };
         

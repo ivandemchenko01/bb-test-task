@@ -1,9 +1,5 @@
-﻿using BB.TaskManager.Application.ViewModels;
-using BB.TaskManager.Application.ViewModels.DataTransferObjects;
-using BB.TaskManager.Application.ViewModels.TaskViewModels.TaskViewModels;
-using BB.TaskManager.Contracts.Models;
+﻿using BB.TaskManager.Contracts.Models;
 using BB.TaskManager.Domain.Models;
-using Task = BB.TaskManager.Domain.Models.Task;
 
 namespace BB.TaskManager.Application.Interfaces;
 
@@ -18,4 +14,5 @@ public interface ITaskService
     Task<bool> DeleteTaskAsync(DeleteTaskModel model);
     Task<List<TaskList>> GetTaskListsAsync(Guid userId, GetTaskListFilter filter);
     Task<bool> MoveTaskAsync(MoveTaskModel model);
+    Task<bool> ChangeTaskStatusAsync(ChangeTaskStatusModel requestModel);
 }

@@ -1,9 +1,10 @@
 ﻿namespace BB.TaskManager.Application.DTOs;
 
-public class TaskListDto
+public class TaskDto
 {
     public Guid Id { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
-    public List<TaskDto> Tasks { get; set; }
+    public string Status { get; set; }
+    public List<TaskHistoryDto> History { get; set; }
 }

@@ -16,4 +16,5 @@ public interface ITaskRepository
     Task<bool> UpdateTaskListAsync(UpdateTaskListModel model);
     Task<bool> DeleteTaskListAsync(DeleteTaskListModel model);
     Task<bool> MoveTaskAsync(MoveTaskModel model);
+    Task<bool> ChangeTaskStatusAsync(ChangeTaskStatusModel requestModel);
 }

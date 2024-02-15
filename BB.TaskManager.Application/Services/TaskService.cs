@@ -54,4 +54,9 @@ public class TaskService : ITaskService
     {
         return await _taskRepository.MoveTaskAsync(model);
     }
+
+    public async Task<bool> ChangeTaskStatusAsync(ChangeTaskStatusModel requestModel)
+    {
+        return await _taskRepository.ChangeTaskStatusAsync(requestModel);
+    }
 }

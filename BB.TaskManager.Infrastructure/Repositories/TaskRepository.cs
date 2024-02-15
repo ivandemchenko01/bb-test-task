@@ -60,7 +60,17 @@ public class TaskRepository : ITaskRepository
             Id = Guid.NewGuid(),
             Title = model.Title,
             Description = model.Description,
-            TaskListId = model.TaskListId
+            TaskListId = model.TaskListId,
+            History = new ()
+            {
+                new TaskHistory
+                {
+                    Id = Guid.NewGuid(),
+                    Status = BB.TaskManager.Contracts.Enumerations.TaskStatus.Waiting,
+                    Date = DateTime.Now
+                }
+            },
+            Status = BB.TaskManager.Contracts.Enumerations.TaskStatus.Waiting
         };
         
         await _context.Tasks.AddAsync(task);
@@ -108,6 +118,7 @@ public class TaskRepository : ITaskRepository
     {
         var taskLists = await _context.TaskLists
             .Include(x=>x.Tasks)
+            .ThenInclude(x=>x.History)
             .Where(x =>
                 x.UserId == userId &&
                 x.Title.ToLower().Contains(filter.TitleQuery.ToLower()) &&
@@ -199,6 +210,31 @@ public class TaskRepository : ITaskRepository
         _context.Tasks.Update(task);
         await _context.SaveChangesAsync();
 
+        return true;
+    }
+
+    public async Task<bool> ChangeTaskStatusAsync(ChangeTaskStatusModel requestModel)
+    {
+        var task = await _context.Tasks
+            .Include(x => x.History)
+            .Include(x => x.TaskList)
+            .FirstOrDefaultAsync(x => x.TaskList.UserId == requestModel.UserId && x.Id == requestModel.TaskId);
+
+        if (task.Status == requestModel.Status)
+            throw new Exception($"Task already have a {requestModel.Status.ToString()} status.");
+
+        _context.TaskHistories.Add(new TaskHistory()
+        {
+            Id = Guid.NewGuid(),
+            Date = DateTime.Now,
+            Status = requestModel.Status,
+            TaskId = task.Id
+        });
+        task.Status = requestModel.Status;
+        
+        _context.Entry(task).State = EntityState.Modified;
+        await _context.SaveChangesAsync();
+        
         return true;
     }
 }

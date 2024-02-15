@@ -11,10 +11,11 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     public DbSet<TaskList> TaskLists { get; set; }
     public DbSet<Task> Tasks { get; set; }
     public DbSet<User> ApplicationUsers { get; set; }
+    public DbSet<TaskHistory> TaskHistories { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) 
     {
-        
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

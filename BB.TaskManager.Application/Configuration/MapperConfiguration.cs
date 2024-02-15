@@ -14,5 +14,8 @@ public class MapperConfiguration : Profile
 
         CreateMap<TaskList, TaskListDto>()
             .ReverseMap();
+
+        CreateMap<TaskHistory, TaskHistoryDto>()
+            .ReverseMap();
     }
 }
