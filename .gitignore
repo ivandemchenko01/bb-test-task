@@ -1,0 +1,15 @@
+/.idea/.idea.BB.TaskManager.API/.idea
+/BB.TaskManager.API/bin/
+/BB.TaskManager.API/obj
+/BB.TaskManager.Application/bin/
+/BB.TaskManager.API.sln.DotSettings.user
+/BB.TaskManager.Application/obj/
+/BB.TaskManager.Contracts/bin/
+/BB.TaskManager.Contracts/obj/
+/BB.TaskManager.Domain/bin/
+/BB.TaskManager.Domain/obj/
+/BB.TaskManager.Infrastructure/bin
+/BB.TaskManager.Infrastructure/obj
+/BB.TaskManager.Tests/bin
+/BB.TaskManager.Tests/obj/
+/BB.TaskManager.Persistence/obj/
