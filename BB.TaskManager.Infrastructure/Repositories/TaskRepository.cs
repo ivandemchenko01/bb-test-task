@@ -118,6 +118,8 @@ public class TaskRepository : ITaskRepository
     {
         if (filter.Page <= 0)
             filter.Page = 1;
+        if (filter.PageSize <= 0)
+            filter.PageSize = 10;
         
         var taskLists = await _context.TaskLists
             .Include(x=>x.Tasks)
@@ -126,8 +128,8 @@ public class TaskRepository : ITaskRepository
                 x.UserId == userId &&
                 x.Title.ToLower().Contains(filter.TitleQuery.ToLower()) &&
                 x.Description.ToLower().Contains(filter.DescriptionQuery.ToLower()))
-            .Skip((filter.Page - 1) * 10)
-            .Take(10)
+            .Skip((filter.Page - 1) * filter.PageSize)
+            .Take(filter.PageSize)
             .ToListAsync();
 
         return taskLists;
