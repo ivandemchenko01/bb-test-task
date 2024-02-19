@@ -6,4 +6,5 @@ public interface IAuthService
 {
     Task<string> AuthenticateAsync(string email, string password);
     Task<string> CreateAsync(string email, string username, string password);
+    Task<bool> UpdateAsync(Guid id, string email, string password);
 }

@@ -1,7 +1,3 @@
-using System.Net.Http.Json;
-using BB.TaskManager.Application.ViewModels;
-using Microsoft.AspNetCore.Mvc.Testing;
-
 namespace BB.TaskManager.Tests;
 
 [TestFixture]

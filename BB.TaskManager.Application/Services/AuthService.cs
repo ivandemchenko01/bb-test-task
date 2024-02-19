@@ -61,6 +61,12 @@ public class AuthService : IAuthService
         return null;
     }
 
+    public async Task<bool> UpdateAsync(Guid id,string email, string username)
+    {
+
+        return await _userRepository.UpdateUserAsync(id, email, username);
+    }
+
     private string GenerateJwtToken(IdentityUser user)
     {
         var claims = new List<Claim>

@@ -116,6 +116,9 @@ public class TaskRepository : ITaskRepository
 
     public async Task<List<TaskList>> GetTaskListsAsync(Guid userId, GetTaskListFilter filter)
     {
+        if (filter.Page <= 0)
+            filter.Page = 1;
+        
         var taskLists = await _context.TaskLists
             .Include(x=>x.Tasks)
             .ThenInclude(x=>x.History)

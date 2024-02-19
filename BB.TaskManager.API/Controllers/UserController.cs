@@ -1,4 +1,5 @@
-﻿using BB.TaskManager.Application.Interfaces;
+﻿using BB.TaskManager.API.Extensions;
+using BB.TaskManager.Application.Interfaces;
 using BB.TaskManager.Application.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,6 +29,17 @@ public class UserController : Controller
     public async Task<IActionResult> LoginUserAsync([FromBody] LoginUserVm loginUserVm)
     {
         var token = await _authService.AuthenticateAsync(loginUserVm.Email, loginUserVm.Password);
+        if (token != null)
+            return Ok(token);
+
+        return BadRequest();
+    }
+
+    [HttpPost("update")]
+    public async Task<IActionResult> UpdateUserAsync([FromBody] UpdateUserVm model)
+    {
+        var id = User.GetUserId();
+        var token = await _authService.UpdateAsync(id, model.Email, model.Username);
         if (token != null)
             return Ok(token);
 
